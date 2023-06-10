@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.mvvmnewsapp.data.api.Resource
 import com.androiddevs.mvvmnewsapp.databinding.FragmentSearchNewsBinding
@@ -42,18 +44,19 @@ class SearchNewsFragment : Fragment() {
     }
 
     private fun setOnClicks() {
-        var job : Job? = null
+        var job: Job? = null
         binding.etSearch.doAfterTextChanged { editable ->
-         job?.cancel()
-            job= MainScope().launch {
+            job?.cancel()
+            job = MainScope().launch {
                 delay(500)
                 editable?.let {
-                    if (editable.toString().isNotEmpty()){
-                        viewModel.searchForNews(editable.toString(),1)
+                    if (editable.toString().isNotEmpty()) {
+                        viewModel.searchForNews(editable.toString(), 1)
                     }
                 }
             }
         }
+
     }
 
     private fun setObservers() {
@@ -82,13 +85,23 @@ class SearchNewsFragment : Fragment() {
     private fun hideProgressbar() {
         binding.paginationProgressBar.visibility = View.INVISIBLE
     }
+
     private fun showProgressbar() {
         binding.paginationProgressBar.visibility = View.VISIBLE
     }
 
 
     private fun setupRecyclerView() {
-        myAdapter = NewsAdapter()
+        myAdapter = NewsAdapter(
+            NewsAdapter.OnArticleClickListener {article->
+                    findNavController().navigate(
+                        SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment(
+                            article.url
+                        )
+                    )
+            }
+        )
+
 
         binding.rvSearchNews.apply {
             adapter = myAdapter

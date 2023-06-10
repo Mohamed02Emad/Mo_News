@@ -14,7 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
+class NewsAdapter(private val onClickListener:OnArticleClickListener) : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
     private val differCallBack = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -56,14 +56,12 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .into(ivArticleImage)
 
-
-
             tvSource.text = article.source.name
             tvDescription.text = article.description
             tvTitle.text = article.title
             tvPublishedAt.text = article.publishedAt
             card.setOnClickListener {
-                onItemClickListener?.let { it(article) }
+                    onClickListener.onArticleClick(article)
             }
 
         }
@@ -74,9 +72,9 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         return differ.currentList.size
     }
 
-    private var onItemClickListener: ((Article) -> Unit)? = null
-
-    fun setOnItemClickListener(listener: ((Article) -> Unit)? = null) {
-        onItemClickListener = listener
+    class OnArticleClickListener(private val clickListener: (article: Article) -> Unit) {
+        fun onArticleClick(article: Article) = clickListener(article)
     }
+
+
 }
