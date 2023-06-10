@@ -7,6 +7,9 @@ import retrofit2.http.Query
 
 interface NewsAPI {
 
+    //the documentation to get the parameters  https://newsapi.org/docs
+    // i have an api key in a git ignored file
+
     @GET(getHeadLines)
     suspend fun getHeadLineNews(
         @Query("apiKey")
@@ -18,7 +21,7 @@ interface NewsAPI {
     ):Response<NewsResponse>
 
     @GET(getEverything)
-    suspend fun SearchForNews(
+    suspend fun searchForNews(
         @Query("apiKey")
         apiKey: String = API_KEY,
         @Query("q")
