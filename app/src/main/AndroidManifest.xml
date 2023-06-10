@@ -2,15 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.androiddevs.mvvmnewsapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_news"
         android:label="@string/app_name"
+        android:name=".MyApp"
         android:roundIcon="@drawable/ic_news"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsApp">
         <activity
-            android:name=".presentation.NewsActivity"
+            android:name=".presentation.newsActivity.NewsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

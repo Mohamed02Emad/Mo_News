@@ -8,4 +8,5 @@
     <color name="white">#D8EDEB</color>
     <color name="black">#000B0A</color>
     <color name="main_blue">#7591C2</color>
+    <color name="card_blue">#9F7591C2</color>
 </resources>
