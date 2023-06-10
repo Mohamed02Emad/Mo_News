@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.androiddevs.mvvmnewsapp.api.Resource
+import com.androiddevs.mvvmnewsapp.data.api.Resource
 import com.androiddevs.mvvmnewsapp.databinding.FragmentBreakingNewsBinding
 import com.androiddevs.mvvmnewsapp.presentation.newsActivity.NewsActivity
 import com.androiddevs.mvvmnewsapp.presentation.newsActivity.NewsViewModel
