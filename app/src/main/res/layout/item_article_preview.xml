@@ -5,9 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:elevation="8dp"
+    android:background="@color/card_blue"
+    android:layout_marginTop="8dp"
     android:padding="8dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivArticleImage"
         android:layout_width="160dp"
         android:layout_height="90dp"

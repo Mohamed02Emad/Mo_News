@@ -11,13 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_blue"
+        android:elevation="20dp"
+        android:fontFamily="@font/convergence"
         android:gravity="center"
         android:paddingVertical="8dp"
-        android:fontFamily="@font/convergence"
         android:text="@string/app_name"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="22sp"
         app:layout_constraintTop_toTopOf="parent" />
+
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -34,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_blue"
+        android:elevation="20dp"
         app:elevation="0dp"
         app:labelVisibilityMode="labeled"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"

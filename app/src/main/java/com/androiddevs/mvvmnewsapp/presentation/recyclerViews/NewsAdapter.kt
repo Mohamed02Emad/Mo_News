@@ -1,13 +1,18 @@
 package com.androiddevs.mvvmnewsapp.presentation.recyclerViews
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.data.models.Article
 import com.androiddevs.mvvmnewsapp.databinding.ItemArticlePreviewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
@@ -43,9 +48,15 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
     override fun onBindViewHolder(holder: NewsAdapter.ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.binding.apply {
-            Glide.with(ivArticleImage.context)
-                .load(article.url)
-                .into(ivArticleImage)
+
+                Glide.with(ivArticleImage.context)
+                    .load(article.urlToImage)
+                    .apply(RequestOptions().placeholder(R.drawable.ic_news))
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .into(ivArticleImage)
+
+
 
             tvSource.text = article.source.name
             tvDescription.text = article.description
@@ -56,6 +67,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
             }
 
         }
+
     }
 
     override fun getItemCount(): Int {
