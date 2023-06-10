@@ -5,11 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.mvvmnewsapp.data.api.Resource
+import com.androiddevs.mvvmnewsapp.data.models.Article
 import com.androiddevs.mvvmnewsapp.databinding.FragmentBreakingNewsBinding
 import com.androiddevs.mvvmnewsapp.presentation.newsActivity.NewsActivity
 import com.androiddevs.mvvmnewsapp.presentation.newsActivity.NewsViewModel
@@ -72,12 +72,12 @@ class BreakingNewsFragment : Fragment() {
 
     private fun setupRecyclerView() {
         myAdapter = NewsAdapter(
-            NewsAdapter.OnArticleClickListener {article->
-                    findNavController().navigate(
-                        BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment(
-                            article.url
-                        )
+            NewsAdapter.OnArticleClickListener { article->
+                findNavController().navigate(
+                    BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment(
+                        article
                     )
+                )
             }
         )
 

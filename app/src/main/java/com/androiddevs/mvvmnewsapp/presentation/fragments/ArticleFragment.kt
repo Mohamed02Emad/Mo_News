@@ -20,7 +20,7 @@ class ArticleFragment : Fragment() {
 
     private lateinit var viewModel: NewsViewModel
     private lateinit var binding: FragmentArticleBinding
-    private lateinit var article: String
+    private lateinit var article: Article
     private val args by navArgs<ArticleFragmentArgs>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +40,7 @@ class ArticleFragment : Fragment() {
         article = args.article
         binding.webView.apply {
             webViewClient = WebViewClient()
-            loadUrl(article)
+            loadUrl(article.url)
         }
     }
 }

@@ -47,6 +47,6 @@
         android:label="ArticleFragment" >
         <argument
             android:name="article"
-            app:argType="string" />
+            app:argType="com.androiddevs.mvvmnewsapp.data.models.Article" />
     </fragment>
 </navigation>
