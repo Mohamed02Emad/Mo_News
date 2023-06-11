@@ -1,4 +1,4 @@
-package com.androiddevs.mvvmnewsapp.api
+package com.androiddevs.mvvmnewsapp.data.api
 
 import com.androiddevs.mvvmnewsapp.data.models.NewsResponse
 import retrofit2.Response
@@ -18,15 +18,19 @@ interface NewsAPI {
         countryCode: String = "eg",
         @Query("page")
         pageNumber: Int = 1,
-    ):Response<NewsResponse>
+        @Query("pageSize")
+        pageSize: Int = 20
+    ): Response<NewsResponse>
 
     @GET(getEverything)
     suspend fun searchForNews(
         @Query("apiKey")
         apiKey: String = API_KEY,
         @Query("q")
-        searchQuery: String ,
+        searchQuery: String,
         @Query("page")
         pageNumber: Int = 1,
-    ):Response<NewsResponse>
+        @Query("pageSize")
+        pageSize: Int = 20
+    ): Response<NewsResponse>
 }

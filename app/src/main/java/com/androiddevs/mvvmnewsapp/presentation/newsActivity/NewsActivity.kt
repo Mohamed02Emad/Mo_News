@@ -1,6 +1,7 @@
 package com.androiddevs.mvvmnewsapp.presentation.newsActivity
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -22,6 +23,20 @@ class NewsActivity : AppCompatActivity() {
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupNavigation()
+        setupBottomNavigationVisibility()
+    }
+
+    private fun setupBottomNavigationVisibility() {
+        navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.breakingNewsFragment, R.id.savedNewsFragment, R.id.searchNewsFragment -> {
+                    bottomNavigationView.visibility = View.VISIBLE
+                }
+                else -> {
+                    bottomNavigationView.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun setupNavigation() {

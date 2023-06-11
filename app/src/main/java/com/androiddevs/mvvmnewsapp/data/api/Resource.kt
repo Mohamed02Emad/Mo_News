@@ -1,4 +1,4 @@
-package com.androiddevs.mvvmnewsapp.api
+package com.androiddevs.mvvmnewsapp.data.api
 
 sealed class Resource<T>(
     val data: T? = null,
