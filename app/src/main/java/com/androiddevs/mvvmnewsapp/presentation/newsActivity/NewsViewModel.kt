@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.androiddevs.mvvmnewsapp.data.api.Resource
+import com.androiddevs.mvvmnewsapp.data.models.Article
 import com.androiddevs.mvvmnewsapp.data.models.NewsResponse
 import com.androiddevs.mvvmnewsapp.data.repositories.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,14 +27,16 @@ class NewsViewModel @Inject constructor(
     var searchNewsPage: Int = 1
 
     init {
-        getBreakingNews("us",1)
+        getBreakingNews("us", 1)
     }
-     fun getBreakingNews(countryCode: String, pageNumber: Int) = viewModelScope.launch {
+
+    fun getBreakingNews(countryCode: String, pageNumber: Int) = viewModelScope.launch {
         _breakingNews.postValue(Resource.Loading())
         val response = repository.getBreakingNews(countryCode, pageNumber)
         _breakingNews.postValue(handleBreakingNewsResponse(response))
     }
-     fun searchForNews(query: String, pageNumber: Int) = viewModelScope.launch {
+
+    fun searchForNews(query: String, pageNumber: Int) = viewModelScope.launch {
         _searchNews.postValue(Resource.Loading())
         val response = repository.searchForNews(query, pageNumber)
         _searchNews.postValue(handleBreakingNewsResponse(response))
@@ -41,19 +44,27 @@ class NewsViewModel @Inject constructor(
 
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
-             response.body()?.let { result ->
-             return  Resource.Sucess(result)
+            response.body()?.let { result ->
+                return Resource.Sucess(result)
             }
         }
         return Resource.Error(response.message())
     }
+
     private fun handleSearchForNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
-             response.body()?.let { result ->
-             return  Resource.Sucess(result)
+            response.body()?.let { result ->
+                return Resource.Sucess(result)
             }
         }
         return Resource.Error(response.message())
     }
+
+     fun insertAndUpdateArticle(article: Article) = viewModelScope.launch { repository.updateAndInsert(article)}
+
+     fun getAllArticles() = repository.getAllArticles()
+
+     fun deleteArticle(article: Article) = viewModelScope.launch { repository.deleteArticle(article)}
+
 
 }

@@ -12,6 +12,7 @@ import com.androiddevs.mvvmnewsapp.data.models.Article
 import com.androiddevs.mvvmnewsapp.databinding.FragmentArticleBinding
 import com.androiddevs.mvvmnewsapp.presentation.newsActivity.NewsActivity
 import com.androiddevs.mvvmnewsapp.presentation.newsActivity.NewsViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "ArticleFragment"
@@ -34,6 +35,15 @@ class ArticleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
         setViews()
+        setOnClicks()
+    }
+
+    private fun setOnClicks() {
+        binding.fab.setOnClickListener {
+            viewModel.insertAndUpdateArticle(article)
+            Snackbar.make(binding.root,"saved to favourite", Snackbar.LENGTH_LONG).show()
+            binding.fab.visibility=View.INVISIBLE
+        }
     }
 
     private fun setViews() {
