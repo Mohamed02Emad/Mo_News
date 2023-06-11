@@ -50,7 +50,7 @@ class ArticleFragment : Fragment() {
         article = args.article
         binding.webView.apply {
             webViewClient = WebViewClient()
-            loadUrl(article.url)
+            loadUrl(article.url!!)
         }
     }
 }

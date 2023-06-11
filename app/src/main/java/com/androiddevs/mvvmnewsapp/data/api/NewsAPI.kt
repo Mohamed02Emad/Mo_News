@@ -18,7 +18,9 @@ interface NewsAPI {
         countryCode: String = "eg",
         @Query("page")
         pageNumber: Int = 1,
-    ):Response<NewsResponse>
+        @Query("pageSize")
+        pageSize: Int = 20
+    ): Response<NewsResponse>
 
     @GET(getEverything)
     suspend fun searchForNews(
@@ -28,5 +30,7 @@ interface NewsAPI {
         searchQuery: String,
         @Query("page")
         pageNumber: Int = 1,
-    ):Response<NewsResponse>
+        @Query("pageSize")
+        pageSize: Int = 20
+    ): Response<NewsResponse>
 }

@@ -11,14 +11,14 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "articles")
 data class Article(
     @PrimaryKey(autoGenerate = true) val id: Int = 1,
-    val author: String,
-    val content: String,
-    val description: String,
-    val publishedAt: String,
-    val source: Source,
-    val title: String,
-    val url: String,
-    val urlToImage: String
+    val author: String?,
+    val content: String?,
+    val description: String?,
+    val publishedAt: String?,
+    val source: Source?,
+    val title: String?,
+    val url: String?,
+    val urlToImage: String?
 ) : Parcelable{
 
     override fun hashCode(): Int {

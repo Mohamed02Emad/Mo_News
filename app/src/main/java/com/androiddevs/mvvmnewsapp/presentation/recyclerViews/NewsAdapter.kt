@@ -55,7 +55,7 @@ class NewsAdapter(private val onClickListener:OnArticleClickListener) : Recycler
                     .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .into(ivArticleImage)
 
-            tvSource.text = article.source.name
+            tvSource.text = article.source?.name
             tvDescription.text = article.description
             tvTitle.text = article.title
             tvPublishedAt.text = article.publishedAt
