@@ -40,4 +40,15 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_no_internet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/convergence"
+        android:visibility="invisible"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

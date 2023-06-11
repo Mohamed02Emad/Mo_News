@@ -1,9 +1,12 @@
 package com.androiddevs.mvvmnewsapp.presentation.newsActivity
 
+import android.content.Context
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.androiddevs.mvvmnewsapp.appClasses.isInternetAvailable
 import com.androiddevs.mvvmnewsapp.data.api.Resource
 import com.androiddevs.mvvmnewsapp.data.models.Article
 import com.androiddevs.mvvmnewsapp.data.models.NewsResponse
@@ -15,20 +18,21 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsViewModel @Inject constructor(
-    val repository: NewsRepository
+    val repository: NewsRepository,
 ) : ViewModel() {
 
     private val _breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val breakingNews: LiveData<Resource<NewsResponse>> = _breakingNews
-    var breakingNewsResponse : NewsResponse? = null
+    var breakingNewsResponse: NewsResponse? = null
     var breakingNewsPage: Int = 1
 
     private val _searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val searchNews: LiveData<Resource<NewsResponse>> = _searchNews
-    var searchNewsResponse : NewsResponse? = null
+    var searchNewsResponse: NewsResponse? = null
     var searchNewsPage: Int = 1
 
     init {
+        if (isInternetAvailable(repository.context))
         getBreakingNews("us")
     }
 
@@ -50,13 +54,13 @@ class NewsViewModel @Inject constructor(
                 breakingNewsPage++
                 if (breakingNewsResponse == null) {
                     breakingNewsResponse = result
-                }else{
+                } else {
                     val oldArticles = breakingNewsResponse?.articles
                     val newArticles = result.articles
                     oldArticles?.addAll(newArticles)
 
                 }
-                return Resource.Sucess(breakingNewsResponse?:result)
+                return Resource.Sucess(breakingNewsResponse ?: result)
             }
         }
         return Resource.Error(response.message())
@@ -68,23 +72,25 @@ class NewsViewModel @Inject constructor(
                 searchNewsPage++
                 if (searchNewsResponse == null) {
                     searchNewsResponse = result
-                }else{
+                } else {
                     val oldArticles = searchNewsResponse?.articles
                     val newArticles = result.articles
                     oldArticles?.addAll(newArticles)
 
                 }
-                return Resource.Sucess(searchNewsResponse?:result)
+                return Resource.Sucess(searchNewsResponse ?: result)
             }
         }
         return Resource.Error(response.message())
     }
 
-     fun insertAndUpdateArticle(article: Article) = viewModelScope.launch { repository.updateAndInsert(article)}
+    fun insertAndUpdateArticle(article: Article) =
+        viewModelScope.launch { repository.updateAndInsert(article) }
 
-     fun getAllArticles() = repository.getAllArticles()
+    fun getAllArticles() = repository.getAllArticles()
 
-     fun deleteArticle(article: Article) = viewModelScope.launch { repository.deleteArticle(article)}
+    fun deleteArticle(article: Article) =
+        viewModelScope.launch { repository.deleteArticle(article) }
 
 
 }

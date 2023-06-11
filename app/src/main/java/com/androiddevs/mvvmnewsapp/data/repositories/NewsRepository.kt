@@ -1,5 +1,6 @@
 package com.androiddevs.mvvmnewsapp.data.repositories
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.androiddevs.mvvmnewsapp.data.api.RetrofitInstance
 import com.androiddevs.mvvmnewsapp.data.db.ArticleDataBase
@@ -7,7 +8,7 @@ import com.androiddevs.mvvmnewsapp.data.models.Article
 import com.androiddevs.mvvmnewsapp.data.models.NewsResponse
 import retrofit2.Response
 
-class NewsRepository(val db: ArticleDataBase) {
+class NewsRepository(val db: ArticleDataBase,val context: Context) {
     suspend fun getBreakingNews(countryCode: String, pageNumber: Int = 1): Response<NewsResponse> {
         return RetrofitInstance.api.getHeadLineNews(
             countryCode = countryCode,

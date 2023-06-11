@@ -21,7 +21,8 @@ object module {
     @Provides
     fun provideNewsRepository(
         articleDataBase: ArticleDataBase,
-    ): NewsRepository = NewsRepository(articleDataBase)
+        @ApplicationContext context: Context
+    ): NewsRepository = NewsRepository(articleDataBase,context)
 
     @Provides
     fun provideNewsDao(articleDataBase: ArticleDataBase): ArticleDao {

@@ -1,13 +1,13 @@
 package com.androiddevs.mvvmnewsapp.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.androiddevs.mvvmnewsapp.appClasses.isInternetAvailable
 import com.androiddevs.mvvmnewsapp.data.models.Article
 import com.androiddevs.mvvmnewsapp.databinding.FragmentArticleBinding
 import com.androiddevs.mvvmnewsapp.presentation.newsActivity.NewsActivity
@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "ArticleFragment"
+
 @AndroidEntryPoint
 class ArticleFragment : Fragment() {
 
@@ -34,15 +35,25 @@ class ArticleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
-        setViews()
-        setOnClicks()
+        if (!isInternetAvailable(requireContext())) {
+            setNoInternetViews()
+        } else {
+            setViews()
+            setOnClicks()
+        }
+    }
+
+    private fun setNoInternetViews() {
+        binding.fab.visibility=View.INVISIBLE
+        binding.webView.visibility=View.INVISIBLE
+        binding.tvNoInternet.visibility=View.VISIBLE
     }
 
     private fun setOnClicks() {
         binding.fab.setOnClickListener {
             viewModel.insertAndUpdateArticle(article)
-            Snackbar.make(binding.root,"saved to favourite", Snackbar.LENGTH_LONG).show()
-            binding.fab.visibility=View.INVISIBLE
+            Snackbar.make(binding.root, "saved to favourite", Snackbar.LENGTH_LONG).show()
+            binding.fab.visibility = View.INVISIBLE
         }
     }
 

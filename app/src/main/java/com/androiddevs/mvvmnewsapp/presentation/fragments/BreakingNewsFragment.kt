@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.androiddevs.mvvmnewsapp.appClasses.isInternetAvailable
 import com.androiddevs.mvvmnewsapp.data.api.Resource
 import com.androiddevs.mvvmnewsapp.databinding.FragmentBreakingNewsBinding
 import com.androiddevs.mvvmnewsapp.presentation.newsActivity.NewsActivity
@@ -34,10 +35,18 @@ class BreakingNewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
-        setupRecyclerView()
-        setObservers()
+        if (!isInternetAvailable(requireContext())) {
+            setNoInternetViews()
+        }else {
+            setupRecyclerView()
+            setObservers()
+        }
     }
 
+    private fun setNoInternetViews() {
+        binding.rvBreakingNews.visibility=View.INVISIBLE
+        binding.tvNoInternet.visibility=View.VISIBLE
+    }
 
     private fun setObservers() {
         viewModel.breakingNews.observe(viewLifecycleOwner) { response ->

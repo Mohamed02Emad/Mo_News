@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.androiddevs.mvvmnewsapp.appClasses.isInternetAvailable
 import com.androiddevs.mvvmnewsapp.data.api.Resource
 import com.androiddevs.mvvmnewsapp.databinding.FragmentSearchNewsBinding
 import com.androiddevs.mvvmnewsapp.presentation.newsActivity.NewsActivity
@@ -39,9 +40,19 @@ class SearchNewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
-        setupRecyclerView()
-        setOnClicks()
-        setObservers()
+        if (!isInternetAvailable(requireContext())) {
+            setNoInternetViews()
+        } else {
+            setupRecyclerView()
+            setOnClicks()
+            setObservers()
+        }
+    }
+
+    private fun setNoInternetViews() {
+        binding.rvSearchNews.visibility = View.INVISIBLE
+        binding.etSearch.visibility = View.INVISIBLE
+        binding.tvNoInternet.visibility = View.VISIBLE
     }
 
     private fun setOnClicks() {
